@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { editData } from "../slice.js/dataSlice";
+import axios from "axios";
+import { setIsDBChange } from "../slice.js/generalSlice";
 
 export default function DelBtn({ index }) {
   const data = useSelector((state) => state.data.data);
@@ -12,6 +14,16 @@ export default function DelBtn({ index }) {
       ...data.slice(index + 1, data.length),
     ];
     dispatch(editData(dataCopy));
+
+    axios
+      .post("http://192.168.1.61:80/delete-item", { id: index })
+      .then(() => {
+        console.log("DELETE: đã gửi request");
+        dispatch(setIsDBChange())
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
   return (
     <button

@@ -11,12 +11,7 @@ export const todoItemSlice = createSlice({
   name: "todoItemSlice",
   initialState,
   reducers: {
-    setIsHovering: (state, action) => {
-      state.isHovering = !state.isHovering;
-    },
-    setIndexOfHovering: (state, action) => {
-      state.indexOfHovering = action.payload;
-    },
+   
     setIsEditMode: (state, action) => {
       state.isEditMode = action.payload
     },
@@ -27,8 +22,6 @@ export const todoItemSlice = createSlice({
 });
 
 export const {
-  setIsHovering,
-  setIndexOfHovering,
   setIsEditMode,
   setIndexOfEditItem,
 } = todoItemSlice.actions;

@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setMainValue } from "../slice.js/inputSlice";
 import { setData } from "../slice.js/dataSlice";
+import axios from "axios";
+import { useEffect } from "react";
+import { setIsDBChange } from "../slice.js/generalSlice";
+
 
 export default function Input2() {
   const value = useSelector((state) => state.inputSection.mainValue);
   const dispatch = useDispatch();
-
+ 
   //# onChange
   const handleOnChange = (e) => {
     dispatch(setMainValue(e.target.value));
@@ -14,8 +18,19 @@ export default function Input2() {
   //# khi enter
   const handleOnKeyDown = (e) => {
     if (e.key === "Enter") {
-      dispatch(setData(value));
+
       dispatch(setMainValue(""));
+
+      //
+      axios
+      .post("http://192.168.1.61:80/add-item", { value: value })
+      .then((res) => {
+        console.log("thêm thành công");
+        dispatch(setIsDBChange())
+      })
+      .catch((error) => {
+        console.error("thêm bị lỗi", error);
+      });
     }
   };
 

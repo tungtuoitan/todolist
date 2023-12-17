@@ -5,23 +5,19 @@ import WhiteDot from "./whiteDot";
 import { setIndexOfHovering, setIsHovering } from "../slice.js/todoItemSlice";
 
 export default function Item({ item, index }) {
-  const dispatch = useDispatch();
+ 
 
-  //# mouse enter
-  const handleMouseEnter = () => {
-    dispatch(setIsHovering());
-    dispatch(setIndexOfHovering(index))
-  };
+
   
   return (
     <div
-      className="todo-item flex items-center  w-full  mb-c20 relative caret-transparent"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseEnter}
+      className="todo-item flex items-center  w-full  mb-c20 relative 
+      caret-transparent "
+     
     >
       <WhiteDot />
-      <Content item={item} />
+      <Content item={item.content} />
       <Right index={index} />
-    </div>
+    </div> 
   );
 }

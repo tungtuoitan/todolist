@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { editData } from "../slice.js/dataSlice";
 import { setIsEditMode } from "../slice.js/todoItemSlice";
+import axios from "axios";
+import { setIsDBChange } from "../slice.js/generalSlice";
 
 export default function ChangeBtn() {
   const indexOfEditItem = useSelector(
@@ -11,9 +13,18 @@ export default function ChangeBtn() {
   const editValue = useSelector((state) => state.editSection.editValue);
 
   const handleOnClick = () => {
-    const dataCopy = [...data];
-    dataCopy[indexOfEditItem] = editValue;
-    dispatch(editData(dataCopy));
+    axios
+      .post("http://192.168.1.61:80/change-data", {
+        id: indexOfEditItem,
+        content: editValue,
+      })
+      .then(() => {
+        dispatch(setIsDBChange());
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+
     dispatch(setIsEditMode(false));
   };
   return (
